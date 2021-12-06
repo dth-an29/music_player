@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+</head>
+<body>
+    
+    <div class="player">
+        <div class="dashboard">
+            <!-- header -->
+            <header class="header">
+                <h4>Now playing:</h4>
+                <h2>Bởi Vì Yêu</h2>
+            </header>
+
+            <!-- CD -->
+            <div class="cd">
+                <img src="./assets/img/BoiViYeu.jfif" alt="" class="cd-thumb">
+            </div>
+
+            <!-- control -->
+            <div class="control">
+                <div class="btn btn-repeat">
+                    <i class="fas fa-redo"></i>
+                </div>
+
+                <div class="btn btn-prev">
+                    <i class="fas fa-step-backward"></i>
+                </div>
+
+                <div class="btn btn-play">
+                    <i class="fas fa-pause icon-pause"></i>
+                    <i class="fas fa-play icon-play"></i>
+                </div>
+
+                <div class="btn btn-next">
+                    <i class="fas fa-step-forward"></i>
+                </div>
+
+                <div class="btn btn-random">
+                    <i class="fas fa-random"></i>
+                </div>
+            </div>
+
+            <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+
+            <audio id="audio" src=""></audio>
+        </div>
+
+        <!-- playlist -->
+        <div class="playlist">
+            <div class="song">
+                <img src="./assets/img/ChuyenDoiTa.jpg" alt="" class="thumb">
+                <div class="body">
+                    <h3 class="title">Music name</h3>
+                    <p class="author">Singer</p>
+                </div>
+                <div class="option">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+
+            <div class="song">
+                <img src="./assets/img/ChuyenDoiTa.jpg" alt="" class="thumb">
+                <div class="body">
+                    <h3 class="title">Music name</h3>
+                    <p class="author">Singer</p>
+                </div>
+                <div class="option">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+
+            <div class="song">
+                <img src="./assets/img/ChuyenDoiTa.jpg" alt="" class="thumb">
+                <div class="body">
+                    <h3 class="title">Music name</h3>
+                    <p class="author">Singer</p>
+                </div>
+                <div class="option">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+
+            <div class="song">
+                <img src="./assets/img/ChuyenDoiTa.jpg" alt="" class="thumb">
+                <div class="body">
+                    <h3 class="title">Music name</h3>
+                    <p class="author">Singer</p>
+                </div>
+                <div class="option">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
