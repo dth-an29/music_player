@@ -144,6 +144,7 @@ body {
 
 .song.active {
     background-color: var(--primary-color);
+    box-shadow: 0 6px 8px rgba(230, 48, 48, 0.6);
 }
 
 .song:active {

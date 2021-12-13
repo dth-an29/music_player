@@ -11,11 +11,13 @@ const progress = $('#progress')
 const nextBtn = $('.btn-next')
 const prevBtn = $('.btn-prev')
 const randomBtn = $('.btn-random')
+const repeatBtn = $('.btn-repeat')
 
 const app = {
     currentIndex: 0,
     isPlaying: false,
     isRandom: false,
+    isRepeat: false,
     songs: [
         {
             name: 'Vì Một Câu Nói',
@@ -110,6 +112,7 @@ const app = {
             _this.isPlaying = true
             player.classList.add('playing')
             cdThumbAnimate.play()
+            _this.activeSong()
         }
 
         // Khi song được pause
@@ -141,6 +144,7 @@ const app = {
                 _this.nextSong()
             }
             audio.play()
+            _this.activeSong()
         }
 
          // Khi prev song
@@ -151,6 +155,7 @@ const app = {
                 _this.prevSong()
             }
             audio.play()
+            _this.activeSong()
         }
 
         // Khi random song
@@ -158,12 +163,35 @@ const app = {
             _this.isRandom = !_this.isRandom
             this.classList.toggle('active')
         }
+
+        // Khi repeat song
+        repeatBtn.onclick = function () {
+            _this.isRepeat = !_this.isRepeat
+            this.classList.toggle('active')
+        }
+
+        // Xử lý next song khi audio ended
+        audio.onended = function () {
+            if (_this.isRepeat) {
+                audio.play()
+            } else {
+                nextBtn.click()
+            }
+        }
     },
     loadCurrentSong: function () {
         heading.textContent = this.currentSong.name
         cdThumb.src = this.currentSong.image
         audio.src = this.currentSong.path
 
+    },
+    activeSong: function () {
+        var loopSongs = $$('.song')
+        for (song of loopSongs) {
+            song.classList.remove('active')
+        }
+        const activeSong = loopSongs[this.currentIndex]
+        activeSong.classList.add('active')
     },
     nextSong: function () {
         this.currentIndex++ 
