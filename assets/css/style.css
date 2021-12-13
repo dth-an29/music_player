@@ -67,6 +67,7 @@ body {
     display: flex;
     margin: auto;
     width: 250px;
+    height: 250px;
 }
 
 .cd-thumb {
