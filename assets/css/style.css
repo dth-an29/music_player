@@ -93,6 +93,11 @@ body {
     color: var(--primary-color);
 }
 
+.control .btn-prev:active,
+.control .btn-next:active {
+    color: var(--primary-color);
+}
+
 .control .btn-play {
     width: 32px;
     height: 32px;
@@ -143,7 +148,7 @@ body {
 }
 
 .song.active {
-    background-color: var(--primary-color);
+    background-color: #f7698f;
     box-shadow: 0 6px 8px rgba(230, 48, 48, 0.6);
 }
 

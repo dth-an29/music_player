@@ -48,6 +48,35 @@ const app = {
             singer: 'Juky San',
             path: './assets/music/BoiViYeu-JukySan.mp3',
             image: './assets/img/BoiViYeu.jfif'
+        },{
+            name: 'Vì Một Câu Nói',
+            singer: 'Hoàng Dũng',
+            path: './assets/music/ViMotCauNoi-HoangDung.mp3',
+            image: './assets/img/ViMotCauNoi.jpg'
+        },
+        {
+            name: 'Thói quen',
+            singer: 'Hoàng Dũng - GDucky',
+            path: './assets/music/ThoiQuen-HoangDung-GDucky.mp3',
+            image: './assets/img/ThoiQuen.jpg'
+        },
+        {
+            name: 'Chuyện đôi ta',
+            singer: 'EmceeL - DaLAB',
+            path: './assets/music/ChuyenDoiTa-EmceeL-DaLAB.mp3',
+            image: './assets/img/ChuyenDoiTa.jpg'
+        },
+        {
+            name: 'Money',
+            singer: 'LISA',
+            path: './assets/music/Money-LISA.mp3',
+            image: './assets/img/Money.jpeg'
+        },
+        {
+            name: 'Bởi vì yêu',
+            singer: 'Juky San',
+            path: './assets/music/BoiViYeu-JukySan.mp3',
+            image: './assets/img/BoiViYeu.jfif'
         },
     ],
     render: function () {
@@ -145,6 +174,7 @@ const app = {
             }
             audio.play()
             _this.activeSong()
+            _this.scrollToActiveSong()
         }
 
          // Khi prev song
@@ -156,6 +186,7 @@ const app = {
             }
             audio.play()
             _this.activeSong()
+            _this.scrollToActiveSong()
         }
 
         // Khi random song
@@ -184,6 +215,15 @@ const app = {
         cdThumb.src = this.currentSong.image
         audio.src = this.currentSong.path
 
+    },
+    scrollToActiveSong: function () {
+        setTimeout(() => {
+            const blockView = this.currentIndex <= 3 ? 'end' : 'nearest'
+            $('.song.active').scrollIntoView({
+                behavior: 'smooth',
+                block: blockView,
+            })
+        }, 300)
     },
     activeSong: function () {
         var loopSongs = $$('.song')
