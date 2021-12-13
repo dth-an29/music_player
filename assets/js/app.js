@@ -1,6 +1,8 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+const PLAYER_STORAGE_KEY = 'PLAYER'
+
 const player = $('.player');
 const cd = $('.cd')
 const heading = $('header h2')
@@ -19,8 +21,15 @@ const app = {
     isPlaying: false,
     isRandom: false,
     isRepeat: false,
+    config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
     songs: [
         {
+            name: 'Money',
+            singer: 'LISA',
+            path: './assets/music/Money-LISA.mp3',
+            image: './assets/img/Money.jpeg'
+        },
+        {
             name: 'Vì Một Câu Nói',
             singer: 'Hoàng Dũng',
             path: './assets/music/ViMotCauNoi-HoangDung.mp3',
@@ -37,41 +46,6 @@ const app = {
             singer: 'EmceeL - DaLAB',
             path: './assets/music/ChuyenDoiTa-EmceeL-DaLAB.mp3',
             image: './assets/img/ChuyenDoiTa.jpg'
-        },
-        {
-            name: 'Money',
-            singer: 'LISA',
-            path: './assets/music/Money-LISA.mp3',
-            image: './assets/img/Money.jpeg'
-        },
-        {
-            name: 'Bởi vì yêu',
-            singer: 'Juky San',
-            path: './assets/music/BoiViYeu-JukySan.mp3',
-            image: './assets/img/BoiViYeu.jfif'
-        },{
-            name: 'Vì Một Câu Nói',
-            singer: 'Hoàng Dũng',
-            path: './assets/music/ViMotCauNoi-HoangDung.mp3',
-            image: './assets/img/ViMotCauNoi.jpg'
-        },
-        {
-            name: 'Thói quen',
-            singer: 'Hoàng Dũng - GDucky',
-            path: './assets/music/ThoiQuen-HoangDung-GDucky.mp3',
-            image: './assets/img/ThoiQuen.jpg'
-        },
-        {
-            name: 'Chuyện đôi ta',
-            singer: 'EmceeL - DaLAB',
-            path: './assets/music/ChuyenDoiTa-EmceeL-DaLAB.mp3',
-            image: './assets/img/ChuyenDoiTa.jpg'
-        },
-        {
-            name: 'Money',
-            singer: 'LISA',
-            path: './assets/music/Money-LISA.mp3',
-            image: './assets/img/Money.jpeg'
         },
         {
             name: 'Bởi vì yêu',
@@ -80,6 +54,10 @@ const app = {
             image: './assets/img/BoiViYeu.jfif'
         },
     ],
+    setConfig: function (key, value) {
+        this.config[key] = value;
+        localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config))
+    },
     render: function () {
         const htmls = this.songs.map((song, index) => {
             return `
@@ -193,12 +171,14 @@ const app = {
         // Khi random song
         randomBtn.onclick = function () {
             _this.isRandom = !_this.isRandom
+            _this.setConfig('isRandom', _this.isRandom)
             this.classList.toggle('active')
         }
 
         // Khi repeat song
         repeatBtn.onclick = function () {
             _this.isRepeat = !_this.isRepeat
+            _this.setConfig('isRepeat', _this.isRepeat)
             this.classList.toggle('active')
         }
 
@@ -234,6 +214,10 @@ const app = {
         heading.textContent = this.currentSong.name
         cdThumb.src = this.currentSong.image
         audio.src = this.currentSong.path
+    },
+    loadConfig: function () {
+        this.isRandom = this.config.isRandom
+        this.isRepeat = this.config.isRepeat
     },
     scrollToActiveSong: function () {
         setTimeout(() => {
@@ -276,6 +260,11 @@ const app = {
         this.loadCurrentSong()
     },
     start: function () {
+        // Gán cấu hình từ config
+        this.loadConfig()
+        randomBtn.classList.toggle('active', this.isRandom)
+        repeatBtn.classList.toggle('active', this.isRepeat)
+
         // Định nghĩa các thuộc tính cho object
         this.defineProperties()
 
