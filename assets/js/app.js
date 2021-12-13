@@ -1,8 +1,17 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+const player = $('.player');
+const cd = $('.cd')
+const heading = $('header h2')
+const cdThumb = $('.cd-thumb')
+const audio = $('#audio')
+const playBtn = $('.btn-play')
+const progress = $('#progress')
+
 const app = {
     currentIndex: 0,
+    isPlaying: false,
     songs: [
         {
             name: 'Bởi vì yêu',
@@ -60,9 +69,10 @@ const app = {
         })
     },
     handleEvents: function () {
-        const cd = $('.cd')
+        const _this = this
         const cdWidth = cd.offsetWidth
 
+        // Xử lý phóng to/thu nhỏ CD
         document.onscroll = function () {
             const scrollTop = window.scrollY || document.documentElement.scrollTop
             const newCdWidth = cdWidth - scrollTop
@@ -71,12 +81,43 @@ const app = {
             cd.style.opacity = newCdWidth / cdWidth
             $('.cd-thumb').style.borderWidth = newCdWidth > 0 ? 4 + 'px' : 0
         }
+
+        // Xử lý khi click play 
+        playBtn.onclick = function() {
+            if (_this.isPlaying) {
+                audio.pause()
+            } else {
+                audio.play()
+            }
+        }
+
+        // Khi song được play
+        audio.onplay = function() {
+            _this.isPlaying = true
+            player.classList.add('playing')
+        }
+
+        // Khi song được pause
+        audio.onpause = function() {
+            _this.isPlaying = false
+            player.classList.remove('playing')
+        }
+
+        // Khi tiến độ bài hát thay đổi
+        audio.ontimeupdate = function() {
+            if (audio.duration) {
+                const progressPercent = Math.floor(audio.currentTime / audio.duration * 100)
+                progress.value = progressPercent
+            }
+        }
+
+        // Khi tua song
+        progress.oninput = function(e) {
+            const seekTime = audio.duration / 100 * e.target.value
+            audio.currentTime = seekTime
+        }
     },
     loadCurrentSong: function () {
-        const heading = $('header h2')
-        const cdThumb = $('.cd-thumb')
-        const audio = $('#audio')
-
         heading.textContent = this.currentSong.name
         cdThumb.src = this.currentSong.image
         audio.src = this.currentSong.path
