@@ -10,10 +10,12 @@ const playBtn = $('.btn-play')
 const progress = $('#progress')
 const nextBtn = $('.btn-next')
 const prevBtn = $('.btn-prev')
+const randomBtn = $('.btn-random')
 
 const app = {
     currentIndex: 0,
     isPlaying: false,
+    isRandom: false,
     songs: [
         {
             name: 'Vì Một Câu Nói',
@@ -133,14 +135,28 @@ const app = {
 
         // Khi next song
         nextBtn.onclick = function () {
-            _this.nextSong()
+            if (_this.isRandom) {
+                _this.playRandomSong()
+            } else {
+                _this.nextSong()
+            }
             audio.play()
         }
 
          // Khi prev song
          prevBtn.onclick = function () {
-            _this.prevSong()
+            if (_this.isRandom) {
+                _this.playRandomSong()
+            } else {
+                _this.prevSong()
+            }
             audio.play()
+        }
+
+        // Khi random song
+        randomBtn.onclick = function () {
+            _this.isRandom = !_this.isRandom
+            this.classList.toggle('active')
         }
     },
     loadCurrentSong: function () {
@@ -161,6 +177,15 @@ const app = {
         if (this.currentIndex < 0) {
             this.currentIndex = this.songs.length - 1
         }
+        this.loadCurrentSong()
+    },
+    playRandomSong: function() {
+        let newIndex
+        do {
+            newIndex = Math.floor(Math.random() * this.songs.length)
+        } while (newIndex === this.currentIndex)
+
+        this.currentIndex = newIndex
         this.loadCurrentSong()
     },
     start: function () {
