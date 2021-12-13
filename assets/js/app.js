@@ -12,6 +12,7 @@ const nextBtn = $('.btn-next')
 const prevBtn = $('.btn-prev')
 const randomBtn = $('.btn-random')
 const repeatBtn = $('.btn-repeat')
+const playList = $('.playlist')
 
 const app = {
     currentIndex: 0,
@@ -80,9 +81,9 @@ const app = {
         },
     ],
     render: function () {
-        const htmls = this.songs.map(song => {
+        const htmls = this.songs.map((song, index) => {
             return `
-            <div class="song">
+            <div class="song ${index === this.currentIndex ? 'active' : ''}" data-index="${index}">
                 <img src="${song.image}" alt="" class="thumb">
                 <div class="body">
                     <h3 class="title">${song.name}</h3>
@@ -94,7 +95,7 @@ const app = {
             </div>
             `
         })
-        $('.playlist').innerHTML = htmls.join('')
+        playList.innerHTML = htmls.join('')
     },
     defineProperties: function () {
         Object.defineProperty(this, 'currentSong', {
@@ -209,12 +210,30 @@ const app = {
                 nextBtn.click()
             }
         }
+
+        // Lắng nghe sự kiện click vào playlist
+        playList.onclick = function (e) {
+            const songNode = e.target.closest('.song:not(.active)')
+            if( songNode || e.target.closest('.option')
+            ) {
+                // Khi click vào song
+                if (songNode) {
+                    _this.currentIndex = Number(songNode.dataset.index)
+                    _this.loadCurrentSong()
+                    audio.play()
+                }
+
+                // Khi click vào option
+                if (e.target.closest('.option')) {
+
+                }
+            }
+        }
     },
     loadCurrentSong: function () {
         heading.textContent = this.currentSong.name
         cdThumb.src = this.currentSong.image
         audio.src = this.currentSong.path
-
     },
     scrollToActiveSong: function () {
         setTimeout(() => {
